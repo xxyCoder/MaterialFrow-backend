@@ -1,5 +1,5 @@
 import bcrpty from 'bcryptjs';     // 用于将密码散列（哈希）为安全的字符串
-import { PasswordsNotSame, UserisExists, UserIsNotExists, PasswordError, ArgsHasNull } from "../constant/result.constant";
+import { PasswordsNotSame, UserisExists, UserIsNotExists, PasswordError, ArgsHasNull, serviceError } from "../constant/result.constant";
 import UsersService from "../service/user.service";
 import { Request, Response, NextFunction } from 'express'
 
@@ -10,25 +10,28 @@ const checkTwicePasswordIsSame = async (req: Request, res: Response, next: NextF
     const confirmPassowrd = req.body.confirmPassword;
     if (password !== confirmPassowrd) {
         res.send(PasswordsNotSame);
+    } else {
+        next();
     }
-    next();
 }
 
 const checkArgsIsNotNull = async (req: Request, res: Response, next: NextFunction) => {
-    const username = req.body.username;
-    const password = req.body.password;
+    const { username, password } = req.body;
+    console.log(username, password)
     if (!username || !password) {
         res.send(ArgsHasNull);
+    } else {
+        next();
     }
-    next();
 }
 
 const checkUserIsExists = async (req: Request, res: Response, next: NextFunction) => {
-    const username = req.body.username;
+    const { username } = req.body;
     if (username) {
         let user = await userIsExists({ username });
         if (user !== null) { // 说明该用户存在，不可以修改成该用户名或以该用户名注册
             res.send(UserisExists);
+            return;
         }
     }
     next();
@@ -51,15 +54,15 @@ const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
         if (!data) {
             console.warn(`${username}不存在`);
             res.send(UserIsNotExists);
-            return;
         } else if (!bcrpty.compareSync(password, data.password)) {    // 判断密码
             res.send(PasswordError);
-            return;
         } else {
+            req.body.authority = data.authority;
             next();
         }
     } catch (e) {
         console.error(e);
+        res.send(serviceError);
     }
 }
 
