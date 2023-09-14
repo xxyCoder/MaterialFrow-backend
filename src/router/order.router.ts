@@ -12,3 +12,5 @@ router.post('/entry', auth, checkEntryArgs, entry)
 router.get("/getAllInfo", getAllInfo)
 // 修改订单状态
 router.post("/modifyGoodStatus", auth, checkModifyArgs, checkGoodIsExists, modify);
+
+export default router;
