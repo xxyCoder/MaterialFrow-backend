@@ -86,8 +86,8 @@ const Orders = seq.define('order', {
     timestamps: false   // 禁止添加其他列
 });
 
-Orders.sync({ // 模型同步，创建该表
-    force: true // 数据库如果存在该表，则先删除
-});
+// Orders.sync({ // 模型同步，创建该表
+//     force: true // 数据库如果存在该表，则先删除
+// });
 
 export default Orders;

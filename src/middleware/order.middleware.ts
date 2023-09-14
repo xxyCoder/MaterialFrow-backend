@@ -4,7 +4,14 @@ import OrderService from '../service/order.service'
 const { searchGoodById } = OrderService;
 
 const checkEntryArgs = async (req: Request, res: Response, next: NextFunction) => {
-    const { customerName, customerPhone, customerAddress, firmName, dispatchAssociates, dispatchPhone, dispatchAddress, acceptPhone, acceptAddress, goodName, count, weight, date, status, price } = req.body;
+    const {
+        customerName, customerPhone, customerAddress,
+        firmName, dispatchAssociates, dispatchPhone,
+        dispatchAddress, acceptPhone, acceptAddress,
+        goodName, count, weight,
+        date, status, price
+    } = req.body;
+
     if (!customerName ||
         !customerPhone ||
         !customerAddress ||

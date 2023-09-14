@@ -23,7 +23,6 @@ class UsersController {
         const { username, authority } = req.body;
         try {
             const id = await getUserId(username);
-
             const result = successRequest;
             result.result = {
                 token: jwt.sign({ id, username, authority }, JWT_SECRET!, { expiresIn: '1d' })

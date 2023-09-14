@@ -9,19 +9,22 @@ const checkTwicePasswordIsSame = async (req: Request, res: Response, next: NextF
     const { password, confirmPassowrd } = req.body;
     if (password !== confirmPassowrd) {
         res.send(PasswordsNotSame);
-    } else {
-        next();
+        return;
     }
+    if (password === "") {
+        res.send(ArgsHasNull);
+        return;
+    }
+    next();
 }
 
 const checkArgsIsNotNull = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
-    console.log(username, password)
     if (!username || !password) {
         res.send(ArgsHasNull);
-    } else {
-        next();
+        return;
     }
+    next();
 }
 
 const checkUserIsExists = async (req: Request, res: Response, next: NextFunction) => {
@@ -38,17 +41,15 @@ const checkUserIsExists = async (req: Request, res: Response, next: NextFunction
 
 const crpytPassword = async (req: Request, res: Response, next: NextFunction) => {   // 密码加密
     const { password } = req.body;
-    if (password) { // 有密码就加密
-        const salt = bcrpty.genSaltSync(10);
-        const hash = bcrpty.hashSync(password, salt);    // hash保存的是密文
-        req.body.password = hash;
-    }
+    const salt = bcrpty.genSaltSync(10);
+    const hash = bcrpty.hashSync(password, salt);    // hash保存的是密文
+    req.body.password = hash;
     next();
 }
 
 const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {    // 验证登录
-    const { username, password } = req.body;
     try {
+        const { username, password } = req.body;
         const data = await userIsExists({ username });   // 判断用户是否存在
         if (!data) {
             console.warn(`${username}不存在`);
@@ -56,7 +57,7 @@ const verifyLogin = async (req: Request, res: Response, next: NextFunction) => {
         } else if (!bcrpty.compareSync(password, data.password)) {    // 判断密码
             res.send(PasswordError);
         } else {
-            req.body.authority = data.authority;
+            req.body.authority = data.authority;    // 查询到了将权限挂载，方便后续存储到token中
             next();
         }
     } catch (e) {

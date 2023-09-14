@@ -6,9 +6,23 @@ const { entryGood, searchAllGood, modifyGoodStatus } = OrderService;
 
 class OrderController {
     async entry(req: Request, res: Response) {
-        const { customerName, customerPhone, customerAddress, firmName, dispatchAssociates, dispatchPhone, dispatchAddress, acceptPhone, acceptAddress, goodName, count, weight, date, status, price } = req.body;
+        const {
+            customerName, customerPhone, customerAddress,
+            firmName, dispatchAssociates, dispatchPhone,
+            dispatchAddress, acceptPhone, acceptAddress,
+            goodName, count, weight,
+            date, status, price
+        } = req.body;
+
         try {
-            await entryGood({ customerName, customerPhone, customerAddress, firmName, dispatchAssociates, dispatchPhone, dispatchAddress, acceptPhone, acceptAddress, goodName, count, weight, date, status, price });
+            await entryGood(
+                {
+                    customerName, customerPhone, customerAddress,
+                    firmName, dispatchAssociates, dispatchPhone,
+                    dispatchAddress, acceptPhone, acceptAddress,
+                    goodName, count, weight,
+                    date, status, price
+                });
             res.send(successRequest);
         } catch (e: any) {
             res.send(serviceError);
