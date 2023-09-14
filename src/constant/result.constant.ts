@@ -11,12 +11,14 @@ const invalidToken: ReturnType = {
     code: 1402,
     message: "token无效"
 };
-
-const PasswordsNotSame: ReturnType = {
+const noToken: ReturnType = {
     code: 1403,
+    message: "没有token"
+}
+const PasswordsNotSame: ReturnType = {
+    code: 1404,
     message: "两次密码不一致"
 }
-
 const UserisExists: ReturnType = {
     code: 2601,
     message: "用户存在"
@@ -37,6 +39,11 @@ const ArgsHasNull: ReturnType = {
     message: "参数存在空值"
 }
 
+const ArgsHasInvalid: ReturnType = {
+    code: 1602,
+    message: "参数存在不合法值"
+}
+
 const serviceError: ReturnType = {
     code: 1501,
     message: "服务端出错了"
@@ -44,7 +51,7 @@ const serviceError: ReturnType = {
 
 const successRequest: ReturnType = {
     code: 0,
-    message: "请求成功",
+    message: "成功",
     result: {}
 }
 
@@ -57,5 +64,7 @@ export {
     PasswordError,
     ArgsHasNull,
     serviceError,
-    successRequest
+    successRequest,
+    noToken,
+    ArgsHasInvalid
 }

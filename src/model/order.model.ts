@@ -1,65 +1,86 @@
 import { DataTypes } from 'sequelize' // 导入数据类型
 import seq from '../database/seq.database';
 
-export type OrderModel = Partial<{
-    ship_contact: string,
-    ship_contact_number: string,
-    ship_address: string,
-    Receive_contact: string,
-    delivery_address: string,
-    quantity: number,
-    weight: number,
-    date: Date,
-    goodname: string
-}>
+export type OrderModel = {
+    customerName: string;
+    customerPhone: string;
+    customerAddress: string;
+    firmName: string;
+    dispatchAssociates: string;
+    dispatchPhone: string;
+    dispatchAddress: string;
+    acceptPhone: string;
+    acceptAddress: string;
+    goodName: string;
+    count: number;
+    weight: number;
+    date: string;
+    status: string;
+    price: number
+};
 
 // 创建模型 会自动推导表名，在其后加s 即 users
 const Orders = seq.define('order', {
     // id会被sequlize自动创建
-    ship_contact: {
+    customerName: {
         type: DataTypes.STRING,
-        allowNull: true,
-        comment: "发货联系人"
+        allowNull: false
     },
-    ship_contact_number: {
+    customerPhone: {
         type: DataTypes.STRING,
-        allowNull: true,
-        comment: "发货联系人号码"
+        allowNull: false
     },
-    ship_address: {
+    customerAddress: {
         type: DataTypes.STRING,
-        allowNull: true,
-        comment: "发货地址"
+        allowNull: false
     },
-    Receive_contact: {
+    firmName: {
         type: DataTypes.STRING,
-        allowNull: false,
-        comment: "收货联系人"
+        allowNull: false
     },
-    delivery_address: {
+    dispatchAssociates: {
         type: DataTypes.STRING,
-        allowNull: false,
-        comment: "收货地址"
+        allowNull: false
     },
-    quantity: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-        comment: "数量"
+    dispatchPhone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    dispatchAddress: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    acceptPhone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    acceptAddress: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    goodName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    count: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     weight: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-        comment: "重量"
+        type: DataTypes.STRING,
+        allowNull: false
     },
     date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        comment: "日期"
-    },
-    goodname: {
         type: DataTypes.STRING,
-        allowNull: false,
-        comment: "货物名称"
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    price: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     timestamps: false   // 禁止添加其他列

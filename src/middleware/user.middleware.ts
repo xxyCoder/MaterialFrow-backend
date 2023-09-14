@@ -6,8 +6,7 @@ import { Request, Response, NextFunction } from 'express'
 const { userIsExists } = UsersService;
 
 const checkTwicePasswordIsSame = async (req: Request, res: Response, next: NextFunction) => {
-    const password = req.body.password;
-    const confirmPassowrd = req.body.confirmPassword;
+    const { password, confirmPassowrd } = req.body;
     if (password !== confirmPassowrd) {
         res.send(PasswordsNotSame);
     } else {

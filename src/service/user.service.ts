@@ -1,5 +1,4 @@
-import Users from '../model/user.model';  // 导入视图，对数据库进行操作
-import type { UserModel } from '../model/user.model'
+import Users, { type UserModel } from '../model/user.model';  // 导入视图，对数据库进行操作
 
 class UsersService {
     async createUser({ username, password, authority }: UserModel) {

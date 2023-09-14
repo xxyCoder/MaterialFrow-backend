@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import env from '../config/config.default'
-import { tokenExpiredError, invalidToken } from '../constant/result.constant';
+import { tokenExpiredError, invalidToken, successRequest, noToken } from '../constant/result.constant';
 import type { Request, Response, NextFunction } from 'express'
 
 const { JWT_SECRET } = env;
@@ -12,10 +12,7 @@ interface JwtPayload {
 const auth = async (req: Request, res: Response, next: NextFunction) => {  // 验证用户
     const { authorization } = req.headers;   // token 在放在authorization中
     if (!authorization) {
-        res.send({
-            code: 2406,
-            message: "没有token"
-        });
+        res.send(noToken);
         return;
     }
     const token = authorization.replace('Bearer ', '');
@@ -37,6 +34,11 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {  // �
     }
 }
 
+const check = async (req: Request, res: Response, next: NextFunction) => {
+    res.send(successRequest);
+}
+
 export {
-    auth
+    auth,
+    check
 }
