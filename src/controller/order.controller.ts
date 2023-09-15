@@ -1,64 +1,113 @@
+/*
+ * @Author: 李羊
+ * @Date: 2023-09-14 23:03:29
+ * @FilePath: \MaterialFrow-backend\src\controller\order.controller.ts
+ * @LastEditTime: 2023-09-15 21:55:15
+ * @Description:
+ */
 import { Request, Response } from 'express'
-import OrderService from '../service/order.service'
 import { serviceError, successRequest } from '../constant/result.constant'
+import OrderService from '../service/order.service'
 
-const { entryGood, searchAllGood, modifyGoodStatus, getOrderCountByName } = OrderService;
+const { entryGood, searchAllGood, modifyGoodStatus, getOrderCountByName, getAllEmployeeName } =
+    OrderService
 
 class OrderController {
     async entry(req: Request, res: Response) {
         const {
-            sender, senderPhone, senderAddress,
-            companyName, recipient, recipientPhone,
-            recipientAddress, goodName, ename,
-            count, weight, date, status, price
-        } = req.body;
+            sender,
+            senderPhone,
+            senderAddress,
+            companyName,
+            recipient,
+            recipientPhone,
+            recipientAddress,
+            goodName,
+            ename,
+            count,
+            weight,
+            date,
+            status,
+            price
+        } = req.body
 
         try {
-            await entryGood(
-                {
-                    sender, senderPhone, senderAddress,
-                    companyName, recipient, recipientPhone,
-                    recipientAddress, ename, count, weight,
-                    date, status, price, goodName
-                });
-            res.send(successRequest);
+            await entryGood({
+                sender,
+                senderPhone,
+                senderAddress,
+                companyName,
+                recipient,
+                recipientPhone,
+                recipientAddress,
+                ename,
+                count,
+                weight,
+                date,
+                status,
+                price,
+                goodName
+            })
+            res.send(successRequest)
         } catch (e: any) {
-            res.send(serviceError);
+            console.error(e)
+            res.send(serviceError)
         }
     }
     async getAllInfo(req: Request, res: Response) {
         try {
-            const data = await searchAllGood();
-            const result = successRequest;
-            result.result = data;
-            res.send(result);
+            const data = await searchAllGood()
+            const result = successRequest
+            result.result = data
+            res.send(result)
         } catch (e: any) {
-            console.error(e);
-            res.send(serviceError);
+            console.error(e)
+            res.send(serviceError)
         }
     }
     async modify(req: Request, res: Response) {
         try {
-            const { id, status } = req.body;
-            await modifyGoodStatus({ id, status });
-            res.send(successRequest);
+            const { id, status } = req.body
+            await modifyGoodStatus({ id, status })
+            res.send(successRequest)
         } catch (e: any) {
-            console.error(e);
-            res.send(serviceError);
+            console.error(e)
+            res.send(serviceError)
         }
     }
-    async searchCount(req: Request, res: Response) {
+    async searchAllCount(req: Request, res: Response) {
         try {
-            const { ename } = req.query;
-            const cnt = getOrderCountByName(ename as string);
-            const result = successRequest;
-            result.result = { cnt };
-            res.send(result);
+            const usernames = await getAllEmployeeName()
+            console.log(usernames)
+            let result = successRequest
+            let map = {}
+            Promise.all(
+                usernames.map(
+                    user =>
+                        new Promise((resolve, reject) => {
+                            getOrderCountByName(user.username).then((count: number) => {
+                                map = {
+                                    ...map,
+                                    [user.username]: count
+                                }
+                                resolve(count)
+                            })
+                        })
+                )
+            )
+                .then(() => {
+                    result.result = map
+                    res.send(result)
+                })
+                .catch(err => {
+                    console.error(err)
+                    res.send(serviceError)
+                })
         } catch (e: any) {
-            console.error(e);
-            res.send(serviceError);
+            console.error(e)
+            res.send(serviceError)
         }
     }
 }
 
-export default new OrderController();
+export default new OrderController()

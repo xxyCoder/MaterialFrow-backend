@@ -2,27 +2,27 @@
  * @Author: 李羊
  * @Date: 2023-09-14 23:03:29
  * @FilePath: \MaterialFrow-backend\src\model\order.model.ts
- * @LastEditTime: 2023-09-15 09:53:22
+ * @LastEditTime: 2023-09-15 17:44:03
  * @Description:
  */
 import { DataTypes } from 'sequelize' // 导入数据类型
 import seq from '../database/seq.database'
 
 export type OrderModel = {
-    sender: string,
-    senderPhone: string,
-    senderAddress: string,
-    companyName: string,
-    recipient: string,
-    recipientPhone: string,
-    recipientAddress: string,
-    ename: string,
-    count: number,
-    weight: number,
-    date: string,
-    status: string,
-    price: number,
-    goodName: string;
+    sender: string
+    senderPhone: string
+    senderAddress: string
+    companyName?: string
+    recipient: string
+    recipientPhone: string
+    recipientAddress: string
+    ename: string
+    count: number
+    weight: number
+    date: string
+    status: string
+    price: number
+    goodName: string
 }
 
 // 创建模型 会自动推导表名，在其后加s 即 users
@@ -63,10 +63,6 @@ const Orders = seq.define(
             allowNull: false
         },
         goodName: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        acceptAddress: {
             type: DataTypes.STRING,
             allowNull: false
         },

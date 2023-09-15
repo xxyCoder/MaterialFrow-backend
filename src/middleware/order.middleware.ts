@@ -2,49 +2,48 @@
  * @Author: 李羊
  * @Date: 2023-09-14 23:03:29
  * @FilePath: \MaterialFrow-backend\src\middleware\order.middleware.ts
- * @LastEditTime: 2023-09-15 16:06:23
+ * @LastEditTime: 2023-09-15 22:45:44
  * @Description:
  */
 import { NextFunction, Request, Response } from 'express'
+import env from '../config/config.default'
 import { ArgsHasInvalid, ArgsHasNull } from '../constant/result.constant'
 import OrderService from '../service/order.service'
 const { searchGoodById } = OrderService
 
+const { JWT_SECRET } = env
+
 const checkEntryArgs = async (req: Request, res: Response, next: NextFunction) => {
     const {
-        customerName,
-        customerPhone,
-        customerAddress,
-        firmName,
-        dispatchAssociates,
-        dispatchPhone,
-        dispatchAddress,
-        acceptPhone,
-        acceptAddress,
-        goodName,
+        sender,
+        senderPhone,
+        senderAddress,
+        recipient,
+        recipientPhone,
+        recipientAddress,
+        ename,
         count,
         weight,
         date,
         status,
-        price
+        price,
+        goodName
     } = req.body
 
     if (
-        !customerName ||
-        !customerPhone ||
-        !customerAddress ||
-        !firmName ||
-        !dispatchAssociates ||
-        !dispatchPhone ||
-        !dispatchAddress ||
-        !acceptPhone ||
-        !acceptAddress ||
-        !goodName ||
+        !sender ||
+        !senderPhone ||
+        !senderAddress ||
+        !recipient ||
+        !recipientPhone ||
+        !recipientAddress ||
+        !ename ||
         !count ||
         !weight ||
         !date ||
         !status ||
-        !price
+        !price ||
+        !goodName
     ) {
         res.send(ArgsHasNull)
         return
@@ -74,18 +73,22 @@ const checkGoodIsExists = async (req: Request, res: Response, next: NextFunction
     const data = await searchGoodById(id)
     if (data === '') {
         res.send(ArgsHasInvalid)
-        return;
+        return
     }
     next()
 }
 
-const checkEnameNotNull = async (req: Request, res: Response, next: NextFunction) => {
-    const { ename } = req.query;
-    if (!ename) {
-        res.send(ArgsHasInvalid)
-        return;
+const checkAuthIsAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    const { authority } = req.query
+    const auth = +authority!
+    if (!auth) {
+        res.send({
+            code: 1405,
+            message: '没有管理员权限'
+        })
+        return
     }
-    next();
+    next()
 }
 
-export { checkEntryArgs, checkGoodIsExists, checkModifyArgs, checkEnameNotNull }
+export { checkAuthIsAdmin, checkEntryArgs, checkGoodIsExists, checkModifyArgs }

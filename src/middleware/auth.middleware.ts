@@ -9,10 +9,6 @@ import {
 } from '../constant/result.constant'
 
 const { JWT_SECRET } = env
-interface JwtPayload {
-    id: number
-    username: string
-}
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
     // 验证用户
@@ -23,8 +19,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     }
     const token = authorization.replace('Bearer ', '')
     try {
-        const user = jwt.verify(token, JWT_SECRET!) as JwtPayload
-        // req.body.id = user.id // 让其他中间件也可以访问到数据
+        jwt.verify(token, JWT_SECRET!)
         next()
     } catch (err: any) {
         switch (err.name) {
