@@ -1,44 +1,47 @@
+import type { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import env from '../config/config.default'
-import { tokenExpiredError, invalidToken, successRequest, noToken } from '../constant/result.constant';
-import type { Request, Response, NextFunction } from 'express'
+import {
+    invalidToken,
+    noToken,
+    successRequest,
+    tokenExpiredError
+} from '../constant/result.constant'
 
-const { JWT_SECRET } = env;
+const { JWT_SECRET } = env
 interface JwtPayload {
-    id: number;
-    username: string;
+    id: number
+    username: string
 }
 
-const auth = async (req: Request, res: Response, next: NextFunction) => {  // 验证用户
-    const { authorization } = req.headers;   // token 在放在authorization中
+const auth = async (req: Request, res: Response, next: NextFunction) => {
+    // 验证用户
+    const { authorization } = req.headers // token 在放在authorization中
     if (!authorization) {
-        res.send(noToken);
-        return;
+        res.send(noToken)
+        return
     }
-    const token = authorization.replace('Bearer ', '');
+    const token = authorization.replace('Bearer ', '')
     try {
-        const user = jwt.verify(token, JWT_SECRET) as JwtPayload;
-        req.body.id = user.id;    // 让其他中间件也可以访问到数据
-        next();
+        const user = jwt.verify(token, JWT_SECRET!) as JwtPayload
+        // req.body.id = user.id // 让其他中间件也可以访问到数据
+        next()
     } catch (err: any) {
         switch (err.name) {
             case 'TokenExpiredError':
-                console.error('token过期');
-                res.send(tokenExpiredError);
-                break;
+                console.error('token过期')
+                res.send(tokenExpiredError)
+                break
             case 'JsonWebTokenError':
-                console.error('无效token');
-                res.send(invalidToken);
-                break;
+                console.error('无效token')
+                res.send(invalidToken)
+                break
         }
     }
 }
 
 const check = async (req: Request, res: Response, next: NextFunction) => {
-    res.send(successRequest);
+    res.send(successRequest)
 }
 
-export {
-    auth,
-    check
-}
+export { auth, check }
