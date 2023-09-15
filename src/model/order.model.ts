@@ -9,21 +9,20 @@ import { DataTypes } from 'sequelize' // 导入数据类型
 import seq from '../database/seq.database'
 
 export type OrderModel = {
-    customerName: string
-    customerPhone: string
-    customerAddress: string
-    firmName: string
-    dispatchAssociates: string
-    dispatchPhone: string
-    dispatchAddress: string
-    acceptPhone: string
-    acceptAddress: string
-    goodName: string
-    count: number
-    weight: number
-    date: string
-    status: string
-    price: number
+    sender: string,
+    senderPhone: string,
+    senderAddress: string,
+    companyName: string,
+    recipient: string,
+    recipientPhone: string,
+    recipientAddress: string,
+    ename: string,
+    count: number,
+    weight: number,
+    date: string,
+    status: string,
+    price: number,
+    goodName: string;
 }
 
 // 创建模型 会自动推导表名，在其后加s 即 users
@@ -31,43 +30,43 @@ const Orders = seq.define(
     'order',
     {
         // id会被sequlize自动创建
-        customerName: {
+        sender: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        customerPhone: {
+        senderPhone: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        customerAddress: {
+        senderAddress: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        firmName: {
+        companyName: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        recipient: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        dispatchAssociates: {
+        recipientPhone: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        dispatchPhone: {
+        recipientAddress: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        dispatchAddress: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        acceptPhone: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        acceptAddress: {
+        ename: {
             type: DataTypes.STRING,
             allowNull: false
         },
         goodName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        acceptAddress: {
             type: DataTypes.STRING,
             allowNull: false
         },

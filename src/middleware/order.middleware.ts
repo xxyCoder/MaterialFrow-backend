@@ -74,9 +74,18 @@ const checkGoodIsExists = async (req: Request, res: Response, next: NextFunction
     const data = await searchGoodById(id)
     if (data === '') {
         res.send(ArgsHasInvalid)
-        return
+        return;
     }
     next()
 }
 
-export { checkEntryArgs, checkGoodIsExists, checkModifyArgs }
+const checkEnameNotNull = async (req: Request, res: Response, next: NextFunction) => {
+    const { ename } = req.query;
+    if (!ename) {
+        res.send(ArgsHasInvalid)
+        return;
+    }
+    next();
+}
+
+export { checkEntryArgs, checkGoodIsExists, checkModifyArgs, checkEnameNotNull }

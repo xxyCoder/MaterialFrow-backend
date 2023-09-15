@@ -9,38 +9,16 @@ import Orders, { type OrderModel } from '../model/order.model'
 
 class OrderService {
     async entryGood({
-        customerName,
-        customerPhone,
-        customerAddress,
-        firmName,
-        dispatchAssociates,
-        dispatchPhone,
-        dispatchAddress,
-        acceptPhone,
-        acceptAddress,
-        goodName,
-        count,
-        weight,
-        date,
-        status,
-        price
+        sender, senderPhone, senderAddress,
+        companyName, recipient, recipientPhone,
+        recipientAddress, ename, count, weight,
+        date, status, price, goodName
     }: OrderModel) {
         await Orders.create({
-            customerName,
-            customerPhone,
-            customerAddress,
-            firmName,
-            dispatchAssociates,
-            dispatchPhone,
-            dispatchAddress,
-            acceptPhone,
-            acceptAddress,
-            goodName,
-            count,
-            weight,
-            date,
-            status,
-            price
+            sender, senderPhone, senderAddress,
+            companyName, recipient, recipientPhone,
+            recipientAddress, ename, count, weight,
+            date, status, price, goodName
         })
     }
     async searchAllGood() {
@@ -65,6 +43,14 @@ class OrderService {
                 }
             }
         )
+    }
+    async getOrderCountByName(ename: string) {
+        const cnt = await Orders.count({
+            where: {
+                ename
+            }
+        });
+        return cnt ? cnt : 0;
     }
 }
 
