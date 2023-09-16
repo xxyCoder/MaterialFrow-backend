@@ -1,10 +1,3 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\controller\order.controller.ts
- * @LastEditTime: 2023-09-15 21:55:15
- * @Description:
- */
 import { Request, Response } from 'express'
 import { serviceError, successRequest } from '../constant/result.constant'
 import OrderService from '../service/order.service'

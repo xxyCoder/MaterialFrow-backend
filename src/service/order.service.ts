@@ -1,10 +1,3 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\service\order.service.ts
- * @LastEditTime: 2023-09-15 20:53:24
- * @Description:
- */
 import Orders, { type OrderModel } from '../model/order.model'
 import Users from '../model/user.model'
 

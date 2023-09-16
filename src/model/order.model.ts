@@ -1,10 +1,3 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\model\order.model.ts
- * @LastEditTime: 2023-09-15 17:44:03
- * @Description:
- */
 import { DataTypes } from 'sequelize' // 导入数据类型
 import seq from '../database/seq.database'
 

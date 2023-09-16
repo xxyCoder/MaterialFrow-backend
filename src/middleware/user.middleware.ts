@@ -1,10 +1,3 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\middleware\user.middleware.ts
- * @LastEditTime: 2023-09-15 09:53:06
- * @Description:
- */
 import bcrpty from 'bcryptjs' // 用于将密码散列（哈希）为安全的字符串
 import { NextFunction, Request, Response } from 'express'
 import {

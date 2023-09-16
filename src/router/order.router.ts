@@ -1,10 +1,3 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\router\order.router.ts
- * @LastEditTime: 2023-09-15 20:56:00
- * @Description:
- */
 import express from 'express'
 import OrderController from '../controller/order.controller'
 import { auth } from '../middleware/auth.middleware'

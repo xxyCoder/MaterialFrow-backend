@@ -1,17 +1,7 @@
-/*
- * @Author: 李羊
- * @Date: 2023-09-14 23:03:29
- * @FilePath: \MaterialFrow-backend\src\middleware\order.middleware.ts
- * @LastEditTime: 2023-09-15 22:45:44
- * @Description:
- */
 import { NextFunction, Request, Response } from 'express'
-import env from '../config/config.default'
 import { ArgsHasInvalid, ArgsHasNull } from '../constant/result.constant'
 import OrderService from '../service/order.service'
 const { searchGoodById } = OrderService
-
-const { JWT_SECRET } = env
 
 const checkEntryArgs = async (req: Request, res: Response, next: NextFunction) => {
     const {
