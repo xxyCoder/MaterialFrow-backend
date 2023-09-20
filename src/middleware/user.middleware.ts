@@ -13,7 +13,7 @@ import UsersService from '../service/user.service'
 const { userIsExists } = UsersService
 
 const checkTwicePasswordIsSame = async (req: Request, res: Response, next: NextFunction) => {
-    const { password, confirmPassword } = req.body
+    const { password, confirmPassword } = req.body 
     if (password !== confirmPassword) {
         res.send(PasswordsNotSame)
         return
@@ -35,7 +35,7 @@ const checkArgsIsNotNull = async (req: Request, res: Response, next: NextFunctio
 }
 
 const checkUserIsExists = async (req: Request, res: Response, next: NextFunction) => {
-    const { username } = req.body
+    const { username }: { username: string } = req.body
     if (username) {
         let user = await userIsExists({ username })
         if (user !== null) {

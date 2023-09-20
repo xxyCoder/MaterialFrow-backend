@@ -1,5 +1,5 @@
-import { Sequelize } from 'sequelize'
-import env from '../config/config.default';
+import { Sequelize } from 'sequelize'   // 引入第三方库
+import env from '../config/config.default'; // 引入.env文件
 
 const {
     MYSQL_HOST,
@@ -8,7 +8,7 @@ const {
     MYSQL_DATABASE
 } = env;
 
-const seq = new Sequelize(MYSQL_DATABASE!, MYSQL_USER!, MYSQL_PASSWORD, {
+const seq = new Sequelize(MYSQL_DATABASE!, MYSQL_USER!, MYSQL_PASSWORD, {   // 建立mysql连接
     host: MYSQL_HOST!,
     dialect: 'mysql'
 });
@@ -20,4 +20,4 @@ const seq = new Sequelize(MYSQL_DATABASE!, MYSQL_USER!, MYSQL_PASSWORD, {
 //     console.log(err);
 // })
 
-export default seq;
+export default seq; // 导出seq

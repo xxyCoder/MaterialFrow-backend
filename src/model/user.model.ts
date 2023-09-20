@@ -1,10 +1,10 @@
 import { DataTypes } from 'sequelize' // 导入数据类型
-import seq from '../database/seq.database'
+import seq from '../database/seq.database'  
 
-export type UserModel = {
+export type UserModel = {   // 定义模型类型
     username: string
-    password?: string
-    authority?: number
+    password: string
+    authority: number
 }
 
 // 创建模型 会自动推导表名，在其后加s 即 users
