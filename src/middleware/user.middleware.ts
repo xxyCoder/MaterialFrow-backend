@@ -35,7 +35,7 @@ const checkArgsIsNotNull = async (req: Request, res: Response, next: NextFunctio
 }
 
 const checkUserIsExists = async (req: Request, res: Response, next: NextFunction) => {
-    const { username }: { username: string } = req.body
+    const { username } = req.body
     if (username) {
         let user = await userIsExists({ username })
         if (user !== null) {
